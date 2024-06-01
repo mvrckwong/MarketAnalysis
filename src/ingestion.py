@@ -6,9 +6,13 @@ from pathlib import Path
 
 import pandas as pd
 from sqlalchemy import create_engine
+from typing import List
 
 
-def load_csv_to_db(csv_file: str, engine: create_engine):
+def load_csv_to_db(csv_file: Path | List[Path], engine: create_engine):
+    # if isinstance(csv_file, str):
+    #     csv_file = list(csv_file)
+    
     # Extract table name from the CSV file name
     table_name = csv_file.stem.capitalize()
     df = pd.read_csv(csv_file)
@@ -43,12 +47,19 @@ def main(csv_dir=Path | str):
     db_uri = f'postgresql://{db_user}:{db_pw}@{db_host}/{db_name}?sslmode=require'
     db_engine = create_engine(db_uri)
     
-    # Iterate through all CSV files in the directory and load them into the database
-    for csv_file in csv_dir.glob('*.csv'):
+    # CSV files (Fact and Dimension tables)
+    csv_dtables = [file for file in csv_dir if not '_' in file.name]
+    csv_ftables = [file for file in csv_dir if '_' in file.name]
+    
+    # Iterate through all CSV dimension tables
+    for csv_file in csv_dtables:
         try:
             load_csv_to_db(csv_file, db_engine)
         except Exception as e:
             print(f"Error uploading {csv_file}: {e}")
+            
+    # Iterate through all CSV fact tables
+    
     return True
 
 
