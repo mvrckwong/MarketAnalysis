@@ -1,22 +1,22 @@
-from config import DATA_DIR, PRJ_DIR, SRC_DIR
+from config import DATA_DIR, PRJ_DIR, SRC_DIR, get_dtype
 from dotenv import load_dotenv
 
 from os import getenv
 from pathlib import Path
 
 import pandas as pd
-from sqlalchemy import create_engine
-from typing import List
+from sqlalchemy import create_engine, types
+from tqdm import tqdm
+from typing import List, Dict
 
 
-def load_csv_to_db(csv_file: Path | List[Path], engine: create_engine):
-    
+def load_csv_to_db(csv_file: Path | List[Path], engine: create_engine, dtype: Dict[str, types] = None):
     # Extract table name from the CSV file name
     table_name = csv_file.stem.capitalize()
     df = pd.read_csv(csv_file)
     
-    # Load DataFrame into the database
-    df.to_sql(table_name, engine, if_exists='replace', index=False)
+    # Load DataFrame into the database with specified datatypes
+    df.to_sql(table_name, engine, if_exists='replace', index=False, dtype=dtype)
 
 def main(csv_dir=Path | str):
     # Preprocess the args
@@ -45,12 +45,15 @@ def main(csv_dir=Path | str):
     db_uri = f'postgresql://{db_user}:{db_pw}@{db_host}/{db_name}?sslmode=require'
     db_engine = create_engine(db_uri)
     
-    # Iterate through all the CSV files
-    for csv_file in csv_dir.glob('*.csv'):
+    # Get datatypes
+    dtypes = get_dtype()
+    
+    # Iterate through all the CSV files to the databases
+    for csv_file in tqdm(csv_dir.glob('*.csv'), desc="Uploading CSVs", unit="file"):
         try:
-            load_csv_to_db(csv_file, db_engine)
+            load_csv_to_db(csv_file, db_engine, dtypes)
         except Exception as e:
-            print(f"Error uploading {csv_file}: {e}")
+            print(f"Error in uploading {csv_file}: {e}")
     
     # CSV files (Fact and Dimension tables)
     # csv_dtables = [file for file in csv_dir if not '_' in file.name]
