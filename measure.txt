@@ -1,0 +1,28 @@
+# Measure in Power BI Desktop
+
+Products_Lookup
+- Unique Products = DISTINCTCOUNT(Products[product_name])
+
+Returns_Data
+- All Returns = CALCULATE([Total Returns], ALL(Return_Data))
+- Last Month Returns = CALCULATE([Total Returns], DATEADD('Calendar'[date],-1,MONTH))
+- Quantity Returned = SUM(Return_Data[quantity])
+- Return Rate = [Quantity Returned] / [Quantity Sold]
+- Total Returns = COUNTROWS(Return_Data)
+
+Transaction_Data
+- % Weekend Transactions = [Weekend Transactions] / [Total Transactions]
+- 60-Day Revenue = CALCULATE([Total Revenue], DATESINPERIOD('Calendar'[date], MAX('Calendar'[date]),-60,DAY))
+- All Transactions = CALCULATE([Total Transactions], ALL(Transaction_Data))
+- Last Month Profit = CALCULATE([Total Profit], DATEADD('Calendar'[date],-1,MONTH))
+- Last Month Revenue = CALCULATE([Total Revenue], DATEADD('Calendar'[date],-1,MONTH))
+- Last Month Transactions = CALCULATE([Total Transactions], DATEADD('Calendar'[date],-1,MONTH))
+- Profit Margin = [Total Profit] / [Total Revenue]
+- Quantity Sold = SUM(Transaction_Data[quantity])
+- Revenue Target = [Last Month Revenue] * 1.05
+- Total Cost = SUMX(Transaction_Data, Transaction_Data[quantity] * RELATED(Products[product_cost]))
+- Total Profit = [Total Revenue] - [Total Cost]
+- Total Revenue = SUMX(Transaction_Data, Transaction_Data[quantity] * RELATED(Products[product_retail_price]))
+- Total Transactions = COUNTROWS(Transaction_Data)
+- Weekend Transactions = CALCULATE([Total Transactions], 'Calendar'[Weekend] = "Y")
+- YTD Revenue = CALCULATE([Total Revenue], DATESYTD('Calendar'[date]))

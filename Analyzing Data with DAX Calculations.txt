@@ -1,0 +1,42 @@
+New Column vs New Measure
+
+(Basic Date and Time Functions)
+- Birthyear_CC = YEAR(AW_Customer_Lookup[BirthDate])
+- Birthyear_CC = AW_Customer_Lookup[BirthDate].[Year]
+- Current Age = DATEDIFF(AW_Customer_Lookup[BirthDate], TODAY(), SECOND)
+
+(Conditional)
+- Weekend = IF(OR(AW_Calendar_Lookup[Day of Week]=6, AW_Calendar_Lookup[Day of Week]=7), "Weekend", "Weekday")
+- Weekend = IF(AW_Calendar_Lookup[Day of Week]=6 || AW_Calendar_Lookup[Day of Week]=7, "Weekend", "Weekday")
+
+(Related)
+Revenue = AW_Sales[RetailPrice] * AW_Sales[OrderQuantity]
+
+(Math and Statistics) : Sum(ColumnName), Average(), Min(), Max()
+- Quantity Returned = SUM(AW_Returns[ReturnQuantity])
+- Total Revenue = SUM(AW_Sales[Revenue])
+- Return Rate = DIVIDE([Quantity Returned],[Quantity Sold],"No Sales")
+
+(Count Functions) : COUNT, COUNTA, DISTINCTCOUNT, COUNTROWS
+- Total Returns = COUNT(AW_Returns[ReturnQuantity])
+- Total Orders = DISTINCTCOUNT(AW_Sales[OrderNumber])
+
+(CALCULATE) - This might have a fewer data points or rows given a filter.
+Bulk Orders = CALCULATE([Total Orders], AW_Sales[OrderQuantity] > 1)
+Bulk Orders = CALCULATE([Total Orders], AW_Sales[CategoryName] > "Bikes")
+
+(CALCULATE & ALL)
+ALL Orders = CALCULATE([Total Orders], ALL(AW_Sales)
+% of All Orders = [Total Orders] / [All Orders]
+Overall Avg Price = CALCULATE([Avg Retail Price], ALL(AW_Product_Lookup))
+
+(CALCULATE & FILTER)
+High Ticket Orders = CALCULATE([Total Orders], AW_Product_Lookup[ProductPrice] > [Overall Avg Price])
+
+(ITERATOR FUNCTION) - SUMX, RANKX
+Total Revenue_Measure = SUMX(AW_Sales, AW_Sales[OrderQuantity] * AW_Sales[RetailPrice])
+Total Revenue_Measure = SUMX(AW_Sales, AW_Sales[OrderQuantity] * RELATED(AW_Product_Lookup[ProductPrice]))
+
+(Time Intelligence Formulas)
+YTD Revenue = CALCULATE([Total Revenue], DATESYTD(AW_Calendar_Lookup[Date]))
+Prev Month Revenue = CALCULATE([Total Revenue], DATEADD(AW_Calendar_Lookup[Date],-1,MONTH))
