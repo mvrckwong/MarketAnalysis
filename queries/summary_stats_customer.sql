@@ -1,5 +1,6 @@
+-- Customer Summary Statistics
 -- Create Summary Statistics for Customers
-CREATE OR REPLACE VIEW "CustomersSummaryStats" AS
+CREATE OR REPLACE VIEW "CustomerSummaryStats" AS
 SELECT 
     CAST(COUNT(DISTINCT customer_id) AS INTEGER) AS unique_customers,
     CAST(AVG(total_children) AS NUMERIC(10,2)) AS avg_total_children,

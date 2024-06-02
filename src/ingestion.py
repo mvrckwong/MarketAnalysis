@@ -1,4 +1,4 @@
-from config import DATA_DIR, PRJ_DIR, SRC_DIR, get_dtype
+from config import DATA_DIR, PRJ_DIR, SRC_DIR, db_dtype_dict, db_constraints_dict
 from dotenv import load_dotenv
 
 from os import getenv
@@ -46,12 +46,13 @@ def main(csv_dir=Path | str):
     db_engine = create_engine(db_uri)
     
     # Get datatypes
-    dtypes = get_dtype()
+    db_dtypes = db_dtype_dict
+    db_constraints = db_constraints_dict
     
     # Iterate through all the CSV files to the databases
     for csv_file in tqdm(csv_dir.glob('*.csv'), desc="Uploading CSVs", unit="file"):
         try:
-            load_csv_to_db(csv_file, db_engine, dtypes)
+            load_csv_to_db(csv_file, db_engine, db_dtypes)
         except Exception as e:
             print(f"Error in uploading {csv_file}: {e}")
     
