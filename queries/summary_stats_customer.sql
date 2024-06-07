@@ -18,7 +18,7 @@ SELECT
 FROM "Customers";
 
 -- Create or replace view for the distribution of customers by occupation
-CREATE OR REPLACE VIEW Customers_Occupation_Dist AS
+CREATE OR REPLACE VIEW customer_occupation_dist AS
 SELECT 
     occupation, 
     COUNT(*) AS count 
@@ -26,7 +26,7 @@ FROM Customers
 GROUP BY occupation;
 
 -- Create or replace view for the distribution of customers by gender
-CREATE OR REPLACE VIEW Customers_Gender_Dist AS
+CREATE OR REPLACE VIEW customer_gender_dist AS
 SELECT 
     gender, 
     COUNT(*) AS count 
@@ -34,7 +34,7 @@ FROM Customers
 GROUP BY gender;
 
 -- Create or replace view for the distribution of customers by marital status
-CREATE OR REPLACE VIEW Customers_Marital_Status_Dist AS
+CREATE OR REPLACE VIEW customer_marital_dist AS
 SELECT 
     marital_status, 
     COUNT(*) AS count 
@@ -42,7 +42,7 @@ FROM Customers
 GROUP BY marital_status;
 
 -- Create or replace view for the distribution of customers by member card
-CREATE OR REPLACE VIEW Customers_Member_Card_Dist AS
+CREATE OR REPLACE VIEW customer_member_dist AS
 SELECT 
     member_card, 
     COUNT(*) AS count 
@@ -50,7 +50,7 @@ FROM Customers
 GROUP BY member_card;
 
 -- Create or replace view for the distribution of customers by homeownership
-CREATE OR REPLACE VIEW Customers_Homeowner_Dist AS
+CREATE OR REPLACE VIEW customer_homeowner_dist AS
 SELECT 
     homeowner, 
     COUNT(*) AS count 
@@ -58,7 +58,7 @@ FROM Customers
 GROUP BY homeowner;
 
 -- Create or replace view for the distribution of customers by education level
-CREATE OR REPLACE VIEW Customers_Education_Dist AS
+CREATE OR REPLACE VIEW customer_education_dist AS
 SELECT 
     education, 
     COUNT(*) AS count 

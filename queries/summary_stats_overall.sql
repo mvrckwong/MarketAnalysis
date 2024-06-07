@@ -1,4 +1,4 @@
-CREATE OR REPLACE VIEW "SummaryStatistics" AS
+CREATE OR REPLACE VIEW "overall_summary" AS
 SELECT 
 	COUNT(*) AS total_transactions
-FROM "Transactions_1997";
+FROM overall_transactions
