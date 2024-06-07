@@ -15,7 +15,7 @@ SELECT
     COUNT(DISTINCT customer_id) AS unique_customer_ids,
     COUNT(DISTINCT customer_city) AS unique_cities,
     COUNT(DISTINCT customer_postal_code) AS unique_postal_codes
-FROM Customers;
+FROM "Customers";
 
 -- Create or replace view for the distribution of customers by occupation
 CREATE OR REPLACE VIEW Customers_Occupation_Dist AS

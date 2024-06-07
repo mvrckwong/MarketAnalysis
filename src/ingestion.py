@@ -12,12 +12,19 @@ from typing import List, Dict
 
 
 def load_csv_to_db(csv_file: Path | List[Path], engine: create_engine, dtype: Dict[str, types] = None):
+    
     # Extract table name from the CSV file name
-    table_name = csv_file.stem.capitalize()
+    table_name = csv_file.stem.lower()
     df = pd.read_csv(csv_file)
     
     # Load DataFrame into the database with specified datatypes
-    df.to_sql(table_name, engine, if_exists='replace', index=False, dtype=dtype)
+    df.to_sql(
+        table_name, 
+        engine, 
+        if_exists='replace', 
+        index=False, 
+        dtype=dtype
+    )
 
 def main(csv_dir=Path | str):
     # Preprocess the args
@@ -56,19 +63,7 @@ def main(csv_dir=Path | str):
             load_csv_to_db(csv_file, db_engine, db_dtypes)
         except Exception as e:
             print(f"Error in uploading {csv_file}: {e}")
-    
-    # CSV files (Fact and Dimension tables)
-    # csv_dtables = [file for file in csv_dir if not '_' in file.name]
-    # csv_ftables = [file for file in csv_dir if '_' in file.name]
-    
-    # # Iterate through all CSV dimension tables
-    # for csv_file in csv_dtables:
-    #     try:
-    #         load_csv_to_db(csv_file, db_engine)
-    #     except Exception as e:
-    #         print(f"Error uploading {csv_file}: {e}")
-            
-    # Iterate through all CSV fact tables
+            return False
     
     return True
 
