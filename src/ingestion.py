@@ -1,5 +1,3 @@
-from config import DATA_DIR, PRJ_DIR, SRC_DIR, \
-    db_dtype_dict, db_constraints_dict
 from dotenv import load_dotenv
 
 from os import getenv
@@ -9,6 +7,9 @@ import pandas as pd
 from sqlalchemy import create_engine, types
 from tqdm import tqdm
 from typing import List, Dict
+
+from config import DATA_DIR, PRJ_DIR, SRC_DIR, \
+    db_dtype_dict, db_constraints_dict
 
 
 def load_csv_to_db(csv_file: Path | List[Path], engine: create_engine, dtype: Dict[str, types] = None):
