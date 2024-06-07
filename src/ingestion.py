@@ -1,4 +1,5 @@
-from config import DATA_DIR, PRJ_DIR, SRC_DIR, db_dtype_dict, db_constraints_dict
+from config import DATA_DIR, PRJ_DIR, SRC_DIR, \
+    db_dtype_dict, db_constraints_dict
 from dotenv import load_dotenv
 
 from os import getenv

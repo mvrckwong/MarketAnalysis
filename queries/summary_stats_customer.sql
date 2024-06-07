@@ -1,4 +1,5 @@
-CREATE VIEW Customers_Summary AS
+-- Create or replace view for a summary of customer information
+CREATE OR REPLACE VIEW Customers_Summary AS
 SELECT 
     COUNT(DISTINCT customer_id) AS unique_customers,
     AVG(num_children_at_home) AS avg_children_at_home,
@@ -16,20 +17,50 @@ SELECT
     COUNT(DISTINCT customer_postal_code) AS unique_postal_codes
 FROM Customers;
 
-CREATE VIEW Customers_Occupation_Dist AS
-SELECT occupation, COUNT(*) AS count FROM Customers GROUP BY occupation;
+-- Create or replace view for the distribution of customers by occupation
+CREATE OR REPLACE VIEW Customers_Occupation_Dist AS
+SELECT 
+    occupation, 
+    COUNT(*) AS count 
+FROM Customers 
+GROUP BY occupation;
 
-CREATE VIEW Customers_Gender_Dist AS
-SELECT gender, COUNT(*) AS count FROM Customers GROUP BY gender;
+-- Create or replace view for the distribution of customers by gender
+CREATE OR REPLACE VIEW Customers_Gender_Dist AS
+SELECT 
+    gender, 
+    COUNT(*) AS count 
+FROM Customers 
+GROUP BY gender;
 
-CREATE VIEW Customers_Marital_Status_Dist AS
-SELECT marital_status, COUNT(*) AS count FROM Customers GROUP BY marital_status;
+-- Create or replace view for the distribution of customers by marital status
+CREATE OR REPLACE VIEW Customers_Marital_Status_Dist AS
+SELECT 
+    marital_status, 
+    COUNT(*) AS count 
+FROM Customers 
+GROUP BY marital_status;
 
-CREATE VIEW Customers_Member_Card_Dist AS
-SELECT member_card, COUNT(*) AS count FROM Customers GROUP BY member_card;
+-- Create or replace view for the distribution of customers by member card
+CREATE OR REPLACE VIEW Customers_Member_Card_Dist AS
+SELECT 
+    member_card, 
+    COUNT(*) AS count 
+FROM Customers 
+GROUP BY member_card;
 
-CREATE VIEW Customers_Homeowner_Dist AS
-SELECT homeowner, COUNT(*) AS count FROM Customers GROUP BY homeowner;
+-- Create or replace view for the distribution of customers by homeownership
+CREATE OR REPLACE VIEW Customers_Homeowner_Dist AS
+SELECT 
+    homeowner, 
+    COUNT(*) AS count 
+FROM Customers 
+GROUP BY homeowner;
 
-CREATE VIEW Customers_Education_Dist AS
-SELECT education, COUNT(*) AS count FROM Customers GROUP BY education;
+-- Create or replace view for the distribution of customers by education level
+CREATE OR REPLACE VIEW Customers_Education_Dist AS
+SELECT 
+    education, 
+    COUNT(*) AS count 
+FROM Customers 
+GROUP BY education;

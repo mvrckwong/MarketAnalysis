@@ -1,4 +1,4 @@
-CREATE VIEW Transactions_1997_Summary AS
+CREATE OR REPLACE VIEW Transactions_1997_Summary AS
 SELECT 
     COUNT(DISTINCT store_id) AS unique_store_ids,
     COUNT(DISTINCT stock_date) AS unique_stock_dates,

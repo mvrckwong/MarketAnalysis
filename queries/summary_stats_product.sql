@@ -1,5 +1,5 @@
--- Aggregate Functions
-CREATE VIEW Products_Summary AS
+-- Aggregate Functions: Summary of product information
+CREATE OR REPLACE VIEW Products_Summary AS
 SELECT 
     AVG(product_weight) AS avg_product_weight,
     COUNT(DISTINCT product_name) AS unique_product_names,
@@ -11,9 +11,17 @@ SELECT
 FROM Products;
 
 -- Distribution: Low Fat Distribution
-CREATE VIEW Products_Low_Fat_Dist AS
-SELECT low_fat, COUNT(*) AS count FROM Products GROUP BY low_fat;
+CREATE OR REPLACE VIEW Products_Low_Fat_Dist AS
+SELECT 
+    low_fat, 
+    COUNT(*) AS count 
+FROM Products 
+GROUP BY low_fat;
 
--- Distribution: Recyclable
-CREATE VIEW Products_Recyclable_Dist AS
-SELECT recyclable, COUNT(*) AS count FROM Products GROUP BY recyclable;
+-- Distribution: Recyclable Products
+CREATE OR REPLACE VIEW Products_Recyclable_Dist AS
+SELECT 
+    recyclable, 
+    COUNT(*) AS count 
+FROM Products 
+GROUP BY recyclable;

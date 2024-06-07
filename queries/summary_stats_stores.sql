@@ -1,4 +1,5 @@
-CREATE VIEW Stores_Summary AS
+-- Aggregate Functions: Summary of store information
+CREATE OR REPLACE VIEW Stores_Summary AS
 SELECT 
     COUNT(DISTINCT store_street_address) AS unique_store_street_addresses,
     AVG(grocery_sqft) AS avg_grocery_sqft,
@@ -14,5 +15,10 @@ SELECT
     COUNT(DISTINCT store_country) AS unique_store_countries
 FROM Stores;
 
-CREATE VIEW Stores_Type_Dist AS
-SELECT store_type, COUNT(*) AS count FROM Stores GROUP BY store_type;
+-- Distribution: Store Type Distribution
+CREATE OR REPLACE VIEW Stores_Type_Dist AS
+SELECT 
+    store_type, 
+    COUNT(*) AS count 
+FROM Stores 
+GROUP BY store_type;
