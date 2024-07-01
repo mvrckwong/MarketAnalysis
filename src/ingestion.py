@@ -56,10 +56,9 @@ def main(csv_dir=Path | str):
     
     # Get datatypes
     db_dtypes = db_dtype_dict
-    db_constraints = db_constraints_dict
     
     # Iterate through all the CSV files to the databases
-    for csv_file in tqdm(csv_dir.glob('*.csv'), desc="Uploading CSVs", unit="file"):
+    for csv_file in tqdm(csv_dir.glob('*.csv'), desc="Uploading CSV's", unit="file"):
         try:
             load_csv_to_db(csv_file, db_engine, db_dtypes)
         except Exception as e:
