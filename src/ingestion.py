@@ -12,22 +12,23 @@ from config import DATA_DIR, PRJ_DIR, SRC_DIR, \
     db_dtype_dict, db_constraints_dict
 
 
-def load_csv_to_db(csv_file: Path | List[Path], engine: create_engine, dtype: Dict[str, types] = None):
+def load_csv_to_db(csv_file: Path | List[Path], engine: create_engine, dtype: Dict[str, types] = None, schema: str = None):
     
     # Extract table name from the CSV file name
     table_name = csv_file.stem.lower()
     df = pd.read_csv(csv_file)
     
-    # Load DataFrame into the database with specified datatypes
+    # Load DataFrame into the database with specified datatypes and schema
     df.to_sql(
         table_name, 
         engine, 
         if_exists='replace', 
         index=False, 
-        dtype=dtype
+        dtype=dtype,
+        schema=schema
     )
 
-def main(csv_dir=Path | str):
+def main(csv_dir=Path | str, schema: str = None):
     # Preprocess the args
     if isinstance(csv_dir, str):
         csv_dir = Path(csv_dir)
@@ -60,7 +61,7 @@ def main(csv_dir=Path | str):
     # Iterate through all the CSV files to the databases
     for csv_file in tqdm(csv_dir.glob('*.csv'), desc="Uploading CSV's", unit="file"):
         try:
-            load_csv_to_db(csv_file, db_engine, db_dtypes)
+            load_csv_to_db(csv_file, db_engine, db_dtypes, schema=schema)
         except Exception as e:
             print(f"Error in uploading {csv_file}: {e}")
             return False
@@ -70,5 +71,6 @@ def main(csv_dir=Path | str):
 
 # Running the main function
 if __name__ == "__main__":
-    if main(DATA_DIR):
+    schema_name = 'raw'  # Specify your schema name here
+    if main(DATA_DIR, schema=schema_name):
         print("Main function finished successfully.")
